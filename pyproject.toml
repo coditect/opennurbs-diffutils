@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "opennurbs_diffutils"
+version = "0.1.0"
+description = "Diffing, patching, and three-way merging for openNURBS 3D models"
+authors = ["Nicholas Rawlings <norawlin@uncc.edu>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/coditect/opennurbs-diffutils"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+	"Topic :: Artistic Software",
+	"Topic :: Multimedia :: Graphics :: 3D Modeling",
+	"Topic :: Software Development :: Version Control",
+	"Topic :: Utilities"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+rhino3dm = {git="https://github.com/coditect/rhino3dm.git", branch="opennurbs-diffutils"}
+Levenshtein = "^0.20.1"
+wrapt = "^1.14.1"
+colorama = "^0.4.6"
+importlib-metadata = "^1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+pylint = "^2.15.8"
+black = "^22.12.0"
+
+[tool.poetry.scripts]
+"3dmdiff" = "opennurbs_diffutils.cmd.diff:main"
+"3dmpatch" = "opennurbs_diffutils.cmd.patch:main"
+"3dmdiff3" = "opennurbs_diffutils.cmd.diff3:main"
+
+[tool.pylint.basic]
+good-names = ["a", "b", "g", "r", "t0", "t1", "x", "y", "z"]
+
+[tool.pylint.messages_control]
+disable = [
+    "C0103", # Name doesn't conform to snake_case naming style
+    "C0114", # Missing module docstring
+    "C0205", # Class __slots__ should be a non-string iterable (conflicts with black)
+    "W0622", # Redefining built-in
+    "W0707", # Consider explicitly re-raising
+    "E1101"  # Module # has no # member (raised for all imports from rhino3dm)
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
